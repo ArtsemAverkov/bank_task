@@ -8,5 +8,8 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
+  liquibase:
+      enabled: true
+      change-log: classpath:db/changelog/changelog.xml
