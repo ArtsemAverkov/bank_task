@@ -1,12 +1,14 @@
 package by.ysl.banktask.controller;
 
 import by.ysl.banktask.entity.User;
-import by.ysl.banktask.service.user.UserApiService;
+import by.ysl.banktask.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @RestController
@@ -14,7 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserApiService userService;
+    private final UserService userService;
+
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -30,19 +33,19 @@ public class UserController {
 
     @PatchMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable @Valid Long id, @RequestBody @Valid User user){
-         userService.update(user, id);
+    public boolean update(@PathVariable @Valid Long id, @RequestBody @Valid User user){
+         return userService.update(user, id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable @Valid Long id){
-        userService.delete(id);
+    public boolean delete(@PathVariable @Valid Long id){
+       return userService.delete(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<User> readAll() {
-        return userService.readAll();
+    public List<User> readAll(@PageableDefault Pageable pageable) {
+        return userService.readAll(pageable);
     }
 }

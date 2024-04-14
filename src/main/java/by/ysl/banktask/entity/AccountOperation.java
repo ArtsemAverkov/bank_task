@@ -37,4 +37,10 @@ public class AccountOperation {
     private LocalDateTime timestamp;
 
 
+    public AccountOperation(Long id, OperationType operationType, BigDecimal amount, LocalDateTime timestamp) {
+        this.id = id;
+        this.operationType = operationType;
+        this.amount = amount;
+        this.timestamp = timestamp;
+    }
 }

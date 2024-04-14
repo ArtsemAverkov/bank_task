@@ -26,6 +26,11 @@ public class Account {
     private BigDecimal balance;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<AccountOperation> operations = new ArrayList<>();
+    private List<AccountOperation> operations;
 
+    public Account(Long id, User user, BigDecimal balance) {
+        this.id = id;
+        this.user = user;
+        this.balance = balance;
+    }
 }

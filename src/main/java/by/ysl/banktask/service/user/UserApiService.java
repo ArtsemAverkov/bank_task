@@ -6,6 +6,8 @@ import by.ysl.banktask.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
+import org.springframework.data.domain.Pageable;
 import java.beans.Transient;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class UserApiService implements UserService{
     }
 
     @Override
-    public List<User> readAll() {
-        return userRepository.findAll();
+    public List<User> readAll(Pageable pageable) {
+        return userRepository.findAll(pageable).getContent();
     }
 }
