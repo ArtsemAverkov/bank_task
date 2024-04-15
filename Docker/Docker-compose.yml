@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  bankTask:
+    build:
+      context: services/bankTask
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/root
+    image: 'bank_task:user'
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+  postgres:
+    build:
+      context: services/postgres
+      dockerfile: Dockerfile
+    environment:
+      - POSTGRES_USER=artemaverkov
+      - POSTGRES_DB=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5432:5432
+
+
