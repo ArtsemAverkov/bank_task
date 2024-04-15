@@ -26,7 +26,7 @@ public class TransactionApiService implements TransactionService {
         try {
             semaphore.acquire();
             Optional<Account> byId = accountRepository.findById(accountId);
-            if (byId.isEmpty()) {
+            if (!byId.isPresent()) {
                 throw new EntityNotFoundException("Account not found");
             }
             Account account = byId.get();
@@ -50,7 +50,7 @@ public class TransactionApiService implements TransactionService {
         try {
             semaphore.acquire();
             Optional<Account> byId = accountRepository.findById(accountId);
-            if (byId.isEmpty()) {
+            if (!byId.isPresent()) {
                 throw new EntityNotFoundException("Account not found");
             }
             Account account = byId.get();
