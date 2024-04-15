@@ -1,0 +1,160 @@
+openapi: 3.0.0
+info:
+  description: |
+    This API provides endpoints for managing bank operations and accounts.
+    It allows users to deposit and withdraw funds, as well as retrieve account information.
+    The API uses PostgreSQL as the database backend and Liquibase for database migration.
+  title: Bank Task API
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /account/{id}/deposit:
+    post:
+      operationId: deposit
+      parameters:
+      - description: Account ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: Amount to deposit
+        explode: true
+        in: query
+        name: amount
+        required: true
+        schema:
+          type: number
+        style: form
+      responses:
+        "200":
+          description: Operation successful
+      summary: Deposit funds to account
+      tags:
+      - account
+      x-accepts: application/json
+  /account/{id}/withdraw:
+    post:
+      operationId: withdraw
+      parameters:
+      - description: Account ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: Amount to withdraw
+        explode: true
+        in: query
+        name: amount
+        required: true
+        schema:
+          type: number
+        style: form
+      responses:
+        "200":
+          description: Operation successful
+      summary: Withdraw funds from account
+      tags:
+      - account
+      x-accepts: application/json
+  /account/{id}/balance:
+    get:
+      operationId: getBalance
+      parameters:
+      - description: Account ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Account balance retrieved successfully
+      summary: Get account balance
+      tags:
+      - account
+      x-accepts: application/json
+  /account/{id}/all_operation:
+    get:
+      operationId: getAllOperation
+      parameters:
+      - description: Account ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: All account operations retrieved successfully
+      summary: Get all account operations
+      tags:
+      - account
+      x-accepts: application/json
+  /user/{id}:
+    get:
+      operationId: getUserById
+      parameters:
+      - description: User ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: User retrieved successfully
+      summary: Get user by ID
+      tags:
+      - user
+      x-accepts: application/json
+  /user:
+    post:
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "201":
+          description: User created successfully
+      summary: Create a new user
+      tags:
+      - user
+      x-content-type: application/json
+      x-accepts: application/json
+components:
+  schemas:
+    User:
+      example:
+        name: name
+        id: 0
+        email: email
+      properties:
+        id:
+          description: User ID
+          format: int64
+          type: integer
+        name:
+          description: User's name
+          type: string
+        email:
+          description: User's email
+          format: email
+          type: string
+      type: object
+

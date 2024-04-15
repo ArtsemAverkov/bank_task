@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="insertUsersAndAccounts" author="Averkov">
+        <insert tableName="users">
+            <column name="name" value="User1"/>
+        </insert>
+        <insert tableName="users">
+            <column name="name" value="User2"/>
+        </insert>
+
+        <insert tableName="account">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="balance" value="100.50"/>
+        </insert>
+        <insert tableName="account">
+            <column name="user_id" valueNumeric="2"/>
+            <column name="balance" value="200.51"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insertAccountOperations" author="Averkov">
+        <insert tableName="account_operations">
+            <column name="account_id" valueNumeric="1"/>
+            <column name="operation_type" value="DEPOSIT"/>
+            <column name="amount" value="500"/>
+            <column name="timestamp" value="2023-01-01 12:00:00"/>
+        </insert>
+        <insert tableName="account_operations">
+            <column name="account_id" valueNumeric="1"/>
+            <column name="operation_type" value="WITHDRAWAL"/>
+            <column name="amount" value="200"/>
+            <column name="timestamp" value="2023-01-02 14:00:00"/>
+        </insert>
+        <insert tableName="account_operations">
+            <column name="account_id" valueNumeric="2"/>
+            <column name="operation_type" value="DEPOSIT"/>
+            <column name="amount" value="100"/>
+            <column name="timestamp" value="2023-01-03 10:00:00"/>
+        </insert>
+        <insert tableName="account_operations">
+            <column name="account_id" valueNumeric="2"/>
+            <column name="operation_type" value="WITHDRAWAL"/>
+            <column name="amount" value="50"/>
+            <column name="timestamp" value="2023-01-04 16:00:00"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

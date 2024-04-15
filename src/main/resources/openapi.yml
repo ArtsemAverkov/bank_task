@@ -1,0 +1,138 @@
+openapi: 3.0.0
+info:
+  title: Bank Task API
+  description: |
+    This API provides endpoints for managing bank operations and accounts.
+    It allows users to deposit and withdraw funds, as well as retrieve account information.
+    The API uses PostgreSQL as the database backend and Liquibase for database migration.
+  version: "1.0.0"
+paths:
+  /account/{id}/deposit:
+    post:
+      summary: Deposit funds to account
+      operationId: deposit
+      tags:
+        - account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Account ID
+          schema:
+            type: integer
+        - name: amount
+          in: query
+          required: true
+          description: Amount to deposit
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Operation successful
+
+  /account/{id}/withdraw:
+    post:
+      summary: Withdraw funds from account
+      operationId: withdraw
+      tags:
+        - account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Account ID
+          schema:
+            type: integer
+        - name: amount
+          in: query
+          required: true
+          description: Amount to withdraw
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Operation successful
+
+  /account/{id}/balance:
+    get:
+      summary: Get account balance
+      operationId: getBalance
+      tags:
+        - account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Account ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Account balance retrieved successfully
+
+  /account/{id}/all_operation:
+    get:
+      summary: Get all account operations
+      operationId: getAllOperation
+      tags:
+        - account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Account ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: All account operations retrieved successfully
+
+  /user/{id}:
+    get:
+      summary: Get user by ID
+      operationId: getUserById
+      tags:
+        - user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User retrieved successfully
+
+  /user:
+    post:
+      summary: Create a new user
+      operationId: createUser
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: User ID
+        name:
+          type: string
+          description: User's name
+        email:
+          type: string
+          format: email
+          description: User's email
