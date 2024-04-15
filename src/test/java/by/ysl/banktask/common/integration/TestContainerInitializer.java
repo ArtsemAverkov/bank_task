@@ -7,11 +7,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 
-
-/**
- Initializes the test container for PostgreSQL and sets the required properties for data source configuration.
- */
-
 public class TestContainerInitializer {
 
     private static final DockerImageName POSTGRES_IMAGE =

@@ -7,6 +7,7 @@ import by.ysl.banktask.entity.Account;
 import by.ysl.banktask.repository.AccountRepository;
 import by.ysl.banktask.service.accountOperation.AccountOperationService;
 import by.ysl.banktask.service.transactionAccount.TransactionApiService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,8 +22,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @DisplayName("Transaction Service Test")
 public class TransactionApiServiceTest {
@@ -70,7 +75,7 @@ public class TransactionApiServiceTest {
         }
 
         @Test
-        public void testConcurrentWithdrawAndDeposit(){
+        public void testConcurrentWithdrawAndDeposit() {
             int numThreads = 2;
             Semaphore semaphore = new Semaphore(numThreads);
 
@@ -90,5 +95,36 @@ public class TransactionApiServiceTest {
             }
             executor.shutdown();
         }
+    }
+
+        @Nested
+        @ExtendWith(MockitoExtension.class)
+        public class InvalidData {
+            @InjectMocks
+            private TransactionApiService transactionApiService;
+
+            @Mock
+            private AccountRepository accountRepository;
+
+            @Mock
+            AccountOperationService accountOperationService;
+
+
+            @Test
+            void shouldWithdrawWhenWithdrawInvalid() {
+                when(accountRepository.findById(UserId.VALUE_1.getValue())).thenReturn(Optional.ofNullable(null));
+                assertThrows(EntityNotFoundException.class, () -> {
+                    transactionApiService.withdraw(1L, new BigDecimal("50.00"));
+                });
+            }
+
+            @Test
+            void shouldDepositWhenDepositInvalid() {
+                when(accountRepository.findById(UserId.VALUE_1.getValue())).thenReturn(Optional.ofNullable(null));
+                assertThrows(EntityNotFoundException.class, () -> {
+                    transactionApiService.deposit(1L, new BigDecimal("50.00"));
+                });
+            }
+        }
 }
-}
+

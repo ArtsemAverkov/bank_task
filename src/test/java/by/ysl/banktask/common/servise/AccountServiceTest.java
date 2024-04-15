@@ -6,10 +6,7 @@ import by.ysl.banktask.common.utill.UserId;
 import by.ysl.banktask.entity.Account;
 import by.ysl.banktask.entity.User;
 import by.ysl.banktask.repository.AccountRepository;
-import by.ysl.banktask.repository.UserRepository;
 import by.ysl.banktask.service.account.AccountApiService;
-import by.ysl.banktask.service.account.AccountService;
-import by.ysl.banktask.service.user.UserApiService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,7 +19,10 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 @DisplayName("Account Service Test")

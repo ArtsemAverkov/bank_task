@@ -11,7 +11,6 @@ import by.ysl.banktask.repository.AccountRepository;
 import by.ysl.banktask.service.account.AccountService;
 import by.ysl.banktask.service.accountOperation.AccountOperationService;
 import by.ysl.banktask.service.transactionAccount.TransactionService;
-import by.ysl.banktask.utill.OperationType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
